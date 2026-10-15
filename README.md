@@ -118,3 +118,14 @@ The first seeded user is treated as the current user, as required by the assignm
 - MongoDB must be accessible to the backend.
 - The app and backend are intended to run locally.
 - Do not commit environment variables, credentials, or dependency folders.
+
+## Screenshots
+
+### Home Screen
+
+![Home-1 Screen](screenshots\Home1.jpeg)
+![Home-2 Screen](screenshots\Home2.jpeg)
+
+### Discover Screen
+
+![Discover Screen](screenshots\Discover.jpeg)
