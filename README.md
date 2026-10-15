@@ -123,9 +123,9 @@ The first seeded user is treated as the current user, as required by the assignm
 
 ### Home Screen
 
-![Home-1 Screen](screenshots\Home1.jpeg)
-![Home-2 Screen](screenshots\Home2.jpeg)
+![Home-1 Screen](./screenshots/Home1.jpeg)
+![Home-2 Screen](./screenshots/Home2.jpeg)
 
 ### Discover Screen
 
-![Discover Screen](screenshots\Discover.jpeg)
+![Discover Screen](./screenshots/Discover.jpeg)
