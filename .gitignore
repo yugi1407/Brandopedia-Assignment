@@ -1,0 +1,22 @@
+# Dependencies
+**/node_modules/
+
+# Expo
+**/.expo/
+**/dist/
+**/web-build/
+
+# Environment files and secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Logs
+*.log
+
+# Editor files
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
