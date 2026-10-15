@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { ActivityIndicator, Alert, FlatList, Text, Image, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useTheme from '../../hooks/useTheme';
-import useCurrentUser, { CURRENT_USER_ID } from '../../hooks/useUser';
+import useCurrentUser from '../../hooks/useUser';
 import { requestConnection } from '../../services/connection';
 
 function ProfileCard({ item, requested, connecting, onConnect }) {
@@ -37,7 +37,7 @@ function ProfileCard({ item, requested, connecting, onConnect }) {
         <Text style={[Fonts.tiny, Gutters.microTMargin, Gutters.smallBMargin, { color: Colors.textSecondary, textAlign: 'center' }]} numberOfLines={1}>
           {item.occupation}
         </Text>
-x
+
         <TouchableOpacity
           style={[Layout.row, Layout.alignItemsCenter, Layout.justifyContentCenter, { alignSelf: 'stretch', height: 30, borderRadius: 8, gap: 8, backgroundColor: requested ? '#E9F5F5' : Colors.primary, opacity: connecting ? 0.7 : 1 }]}
           activeOpacity={0.8}
@@ -96,8 +96,13 @@ export default function Discover() {
     );
   }, [query, data]);
 
+
+
   const handleConnect = async (receiverId) => {
+    const currentUserId = user?.currentUser?._id;
+
     if (
+      !currentUserId ||
       !receiverId ||
       requestedIds.includes(receiverId) ||
       connectingIds.includes(receiverId)
@@ -108,7 +113,7 @@ export default function Discover() {
     setConnectingIds((prev) => [...prev, receiverId]);
 
     try {
-      await requestConnection(CURRENT_USER_ID, receiverId);
+      await requestConnection(currentUserId, receiverId);
 
       setRequestedIds((prev) =>
         prev.includes(receiverId)
@@ -126,6 +131,7 @@ export default function Discover() {
       );
     }
   };
+
 
   const errorTextStyle = [
     Layout.fill,

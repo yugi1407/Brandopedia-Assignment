@@ -2,8 +2,6 @@
 import { useState, useEffect } from 'react';
 import { apiGet } from '../services/api';
 
-export const CURRENT_USER_ID = '6ad0688ea3a81d577d9d22ac';
-
 export default function useCurrentUser() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,9 +15,7 @@ export default function useCurrentUser() {
         setLoading(true);
         setError('');
 
-        const data = await apiGet(
-          `/users?currentUserId=${encodeURIComponent(CURRENT_USER_ID)}`
-        );
+        const data = await apiGet('/users');
 
         if (active) {
           setUser(data);

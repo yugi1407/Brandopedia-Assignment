@@ -6,13 +6,9 @@
 **/dist/
 **/web-build/
 
-# Environment files and secrets
-**/.env
-**/.env.*
-!**/.env.example
-
 # Logs
 *.log
+npm-debug.log*
 
 # Editor files
 .vscode/

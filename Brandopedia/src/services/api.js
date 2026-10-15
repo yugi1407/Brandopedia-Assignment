@@ -1,14 +1,10 @@
 
-import { Platform } from 'react-native';
-
 // Android emulator: 10.0.2.2
 // Physical phone: use your computer's LAN IP.
 // Replace with the correct address for your setup.
-const API_BASE_URL =
-  Platform.OS === 'android'
-    ? 'http://10.212.116.128:5000'
-    : 'http://localhost:5000';
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000';
 
+console.log(process.env.EXPO_PUBLIC_API_URL)
 export async function apiGet(path) {
   const response = await fetch(`${API_BASE_URL}${path}`);
 

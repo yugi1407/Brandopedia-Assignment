@@ -5,10 +5,11 @@ A mobile application built using React Native and Expo, with a Node.js, Express,
 ## Features
 
 - **Home:** Displays the current user's profile and a feed of five posts.
-- **Discover:** Displays users with Connect buttons.
-- **Connection requests:** Changes the button to Requested after submitting a request.
-- **Persistent state:** Requested status remains after restarting the app.
-- **Backend integration:** Fetches users and posts and stores connection requests in MongoDB.
+- **Discover:** Displays user profiles with Connect buttons.
+- **Connection Requests:** Updates the button to Requested after a successful request.
+- **Persistent State:** Preserves requested status after restarting the app using MongoDB data.
+- **Backend Integration:** Fetches user profiles and posts and stores connection requests in MongoDB.
+- **Dynamic Current User:** Retrieves the current user's ID from the backend instead of relying on a hardcoded MongoDB ID.
 
 ## Tech Stack
 
@@ -17,13 +18,18 @@ A mobile application built using React Native and Expo, with a Node.js, Express,
 - Node.js
 - Express.js
 - MongoDB
+- Mongoose
 
 ## Project Structure
 
 ```text
 Brandopedia-Assignment/
-├── Brandopedia/         # Mobile application
-├── Brandopedia_server/  # Backend API and seed script
+├── Brandopedia/          # Mobile application
+├── Brandopedia_server/   # Backend API and seed script
+├── screenshots/
+│   ├── Home1.jpeg
+│   ├── Home2.jpeg
+│   └── Discover.jpeg
 ├── .gitignore
 └── README.md
 ```
@@ -48,6 +54,7 @@ npm install
 Create a `.env` file inside `Brandopedia_server`:
 
 ```env
+PORT=5000
 MONGODB_URI=mongodb://127.0.0.1:27017/brandopedia
 ```
 
@@ -55,11 +62,13 @@ Use your own MongoDB connection string if you are using MongoDB Atlas. Never com
 
 ### Seed the Database
 
-Run the seed script to insert the sample users and posts:
+Run the seed script to populate the database with sample users and posts:
 
 ```bash
 npm run seed
 ```
+
+The seed script resets the assignment's sample data and inserts the demo users and posts. Run it again only when you want to reset the sample data.
 
 ### Start the Backend
 
@@ -67,11 +76,11 @@ npm run seed
 npm start
 ```
 
-The backend is expected to run on port `7000`, according to the server configuration.
+The backend runs on port `5000` when configured as shown above.
 
 ## 2. Mobile App Setup
 
-Open another terminal in the project root:
+Open another terminal in the mobile application directory:
 
 ```bash
 cd Brandopedia
@@ -80,43 +89,53 @@ npm install
 
 ### Configure the API URL
 
-Ensure the API base URL in the app points to the backend.
+Create a `.env` file inside `Brandopedia`:
 
-- **Android emulator:** Use the appropriate emulator host address.
-- **Physical device:** Use your computer's local network IP address.
-- Ensure the phone and computer can communicate over the network.
-
-### Start Expo
-
-```bash
-npx expo start
+```env
+EXPO_PUBLIC_API_URL=http://localhost:5000
 ```
 
-Scan the QR code using Expo Go or launch the app in your configured emulator.
+Configure the URL according to your environment:
+
+| Environment | API URL |
+|---|---|
+| iOS simulator or web | `http://localhost:5000` |
+| Android emulator | `http://10.0.2.2:5000` |
+| Physical device using Expo Go | `http://YOUR_COMPUTER_IP:5000` |
+
+For a physical device, replace `YOUR_COMPUTER_IP` with your computer's local network IP address. Ensure both devices are on the same Wi-Fi network and the backend is accessible.
+
+After changing the environment variables, restart Expo with a clean cache:
+
+```bash
+npx expo start --clear
+```
+
+Scan the QR code using Expo Go or open the app in your configured emulator.
 
 ## 3. API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/posts` | Retrieves posts |
-| GET | `/users` | Retrieves users and existing request status |
+| GET | `/users` | Retrieves user profiles and connection-request status |
+| GET | `/posts` | Retrieves the post feed |
 | POST | `/connect` | Creates a connection request |
 
-The first seeded user is treated as the current user, as required by the assignment.
+The backend selects a default current user when `currentUserId` is omitted from the users request. The app uses the returned current user's ID when creating connection requests.
 
 ## 4. Running the Complete Project
 
 1. Start MongoDB.
-2. Run `npm run seed` in `Brandopedia_server` if the sample data needs to be populated.
-3. Run `npm start` in `Brandopedia_server`.
-4. Run `npx expo start` in `Brandopedia`.
+2. Run `npm run seed` in `Brandopedia_server` to populate or reset the sample data.
+3. Start the backend using `npm start`.
+4. Start the mobile app using `npx expo start --clear` inside `Brandopedia`.
 5. Open the app on a device or emulator.
 
 ## Notes
 
 - No login or authentication flow is required for this assignment.
 - MongoDB must be accessible to the backend.
-- The app and backend are intended to run locally.
+- The mobile app and backend are intended to run locally.
 - Do not commit environment variables, credentials, or dependency folders.
 
 ## Screenshots
